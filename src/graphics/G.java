@@ -1,6 +1,7 @@
 package graphics;
 
 import java.awt.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Vector;
@@ -27,7 +28,7 @@ public class G {
   }
 
   //-----------------------V (Vector)-------------------------//
-  public static class V {
+  public static class V implements Serializable{
 
     public static Transform T = new Transform();
     public int x, y;
@@ -201,7 +202,7 @@ public class G {
   }
 
   //----------------------- Pl Polyline-------------------------------//
-  public static class Pl {
+  public static class Pl implements Serializable {
 
     public V[] points;
 

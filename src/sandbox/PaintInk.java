@@ -12,6 +12,8 @@ import reactions.Shape.Prototype;
 
 public class PaintInk extends Window {
 
+  public static String recognised = "";
+
   public PaintInk() {
     super("PaintInk", UC.initialWindowWidth, UC.initialWindowHeight);
   }
@@ -37,6 +39,7 @@ public class PaintInk extends Window {
     }
     g.drawString("points: " + Ink.BUFFER.n, 600, 30);
     pList.show(g);
+    g.drawString(recognised, 700, 40);
   }
 
   public void mousePressed(MouseEvent me) {
@@ -51,6 +54,8 @@ public class PaintInk extends Window {
 
   public void mouseReleased(MouseEvent me) {
     Ink ink = new Ink();
+    Shape s = Shape.recognize(ink);
+    recognised = "recognised: " + ((s != null) ? s.name : "unrecognised");
     Shape.Prototype proto;
     inkList.add(ink);
     if (pList.bestDist(ink.norm) < UC.noMatchDist) {

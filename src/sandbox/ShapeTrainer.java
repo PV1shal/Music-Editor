@@ -10,7 +10,6 @@ import music.UC;
 import reactions.Ink;
 import reactions.Shape;
 import reactions.Shape.Prototype;
-import reactions.Shape.Prototype.List;
 
 public class ShapeTrainer extends Window {
 
@@ -60,25 +59,32 @@ public class ShapeTrainer extends Window {
     repaint();
   }
 
+//  public void mouseReleased(MouseEvent me) {
+//    if (currState != ILLEGAL) {
+//      Ink ink = new Ink();
+//      Shape.Prototype proto;
+//
+//      if (pList == null) {
+//        Shape s = new Shape(currName);
+//        Shape.DB.put(currName, s);
+//        pList = s.prototypes;
+//      }
+//
+//      if (pList.bestDist(ink.norm) < UC.noMatchDist) {
+//        proto = Prototype.List.bestMatch;
+//        proto.blend(ink.norm);
+//      } else {
+//        proto = new Shape.Prototype();
+//        pList.add(proto);
+//      }
+//    }
+//    repaint();
+//  }
+
   public void mouseReleased(MouseEvent me) {
-    if (currState != ILLEGAL) {
-      Ink ink = new Ink();
-      Shape.Prototype proto;
-
-      if (pList == null) {
-        Shape s = new Shape(currName);
-        Shape.DB.put(currName, s);
-        pList = s.prototypes;
-      }
-
-      if (pList.bestDist(ink.norm) < UC.noMatchDist) {
-        proto = Prototype.List.bestMatch;
-        proto.blend(ink.norm);
-      } else {
-        proto = new Shape.Prototype();
-        pList.add(proto);
-      }
-    }
+    Ink ink = new Ink();
+    Shape.DB.train(currName, ink.norm);
+    setState();
     repaint();
   }
 
@@ -86,6 +92,9 @@ public class ShapeTrainer extends Window {
     char c = key.getKeyChar();
     System.out.println("Type: " + c);
     currName = (c == ' ' || c == 0x0D || c == 0x0A) ? "" : currName + c;
+    if (c == ' ' || c == 0x0D || c == 0x0A) {
+      Shape.saveShapeDB();
+    }
     setState();
     repaint();
   }

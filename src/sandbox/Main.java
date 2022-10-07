@@ -9,6 +9,7 @@ public class Main {
         System.out.println("hello, do");
 
         Window.PANEL = new ShapeTrainer();
+//        Window.PANEL = new PaintInk();
         Window.launch();
         
     }

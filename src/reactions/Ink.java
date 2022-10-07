@@ -1,6 +1,7 @@
 package reactions;
 
 import graphics.G;
+import java.io.Serializable;
 import music.I;
 import music.UC;
 
@@ -41,7 +42,7 @@ public class Ink implements I.Show {
   }
 
   //-------------------Norm---------------------//
-  public static class Norm extends G.Pl {
+  public static class Norm extends G.Pl implements Serializable {
 
     public static final int N = UC.normSampleSize;
     public static final int MAX = UC.normCoordinateSize;
@@ -49,12 +50,9 @@ public class Ink implements I.Show {
 
     public Norm() {
       super(N);
-      G.Pl temp = BUFFER.subSample(N);
+      BUFFER.subSample(this);
       G.V.T.set(BUFFER.bbox, NCS);
-      temp.transform();
-      for (int i = 0; i < N; i++) {
-        this.points[i].set(temp.points[i]);
-      }
+      this.transform();
     }
 
     public int dist(Norm n) {
@@ -96,12 +94,11 @@ public class Ink implements I.Show {
       super(MAX);
     }
 
-    public G.Pl subSample(int k) {
-      G.Pl res = new G.Pl(k);
+    public void subSample(G.Pl pl) {
+      int k = pl.points.length;
       for (int i = 0; i < k; i++) {
-        res.points[i].set(this.points[i * (n - 1) / (k - 1)]);
+        pl.points[i].set(this.points[i * (n - 1) / (k - 1)]);
       }
-      return res;
     }
 
     public void add(int x, int y) {
