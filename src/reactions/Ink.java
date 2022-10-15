@@ -116,10 +116,9 @@ public class Ink implements I.Show {
     @Override
     public void show(Graphics g) {
       this.drawN(g, n);
-      bbox.draw(g);
-      g.setColor(Color.blue);
-      this.drawNDots(g, n);
-
+//      bbox.draw(g);
+//      g.setColor(Color.blue);
+//      this.drawNDots(g, n);
     }
 
     @Override

@@ -79,14 +79,33 @@ public class Shape implements Serializable {
         return bestSoFar;
       }
 
-
-      public void train(Ink.Norm norm) {
-        if (bestDist(norm) < UC.noMatchDist) {
-          bestMatch.blend(norm);
+      public void train(Ink ink) {
+        if (isDeletePrototype(ink)) {    // if true it deletes.
+          return;
+        }
+        if (bestDist(ink.norm) < UC.noMatchDist) {
+          bestMatch.blend(ink.norm);
         } else {
           add(new Shape.Prototype());
         }
       }
+
+      public boolean isDeletePrototype(Ink ink) {     // if true it deletes.
+        int DOT = UC.dotThreshold;
+        if (ink.vs.size.x > DOT || ink.vs.size.y > DOT) {
+          return false;
+        }
+        if (ink.vs.loc.y > m + w) {
+          return false;
+        }
+        int iProto = ink.vs.loc.x / (m + w);
+        if (iProto >= size()) {
+          return false;
+        }
+        remove(iProto);
+        return true;
+      }
+
 
       public void show(Graphics g) {
         g.setColor(Color.blue);
@@ -119,9 +138,9 @@ public class Shape implements Serializable {
       return DB.get(name);
     }
 
-    public void train(String name, Ink.Norm norm) {
+    public void train(String name, Ink ink) {
       if (isLegal(name)) {
-        forceGet(name).prototypes.train(norm);
+        forceGet(name).prototypes.train(ink);
       }
     }
 
