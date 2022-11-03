@@ -19,6 +19,11 @@ public abstract class Reaction implements I.React {
     }
   }
 
+  public static void nuke() {
+    byShape = new Map();
+    initialReactions.enable();
+  }
+
   public void enable() {
     List list = byShape.getList(shape);
     if (!list.contains(this)) {
@@ -37,6 +42,7 @@ public abstract class Reaction implements I.React {
 
   //------------------------------------------ List ---------------------------------------------//
   public static class List extends ArrayList<Reaction> {
+
     public void addReaction(Reaction r) {
       add(r);
       r.enable();
@@ -65,6 +71,12 @@ public abstract class Reaction implements I.React {
         }
       }
       return res;
+    }
+
+    public void enable() {
+      for (Reaction r : this) {
+        r.enable();
+      }
     }
   }
 
