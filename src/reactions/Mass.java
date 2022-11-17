@@ -1,51 +1,28 @@
 package reactions;
 
-import java.awt.Graphics;
 import music.I;
 
-public abstract class Mass extends Reaction.List implements I.Show {
+import java.awt.*;
 
-  public Layer layer;
+public abstract class Mass extends Reaction.List implements I.Show{
+    public Layer layer;
 
-  public Mass(String layerName) {
-    this.layer = Layer.byName.get(layerName);
-    if (layer != null) {
-      layer.add(this);
-    } else {
-      System.out.println("Bad layer name " + layerName);
+    public Mass(String layerName){
+        // getting the thing attaching to the string (fetching the thing by name)
+        this.layer = Layer.byName.get(layerName); // this could fail
+        if (layer != null){
+            layer.add(this);
+        }else{
+            System.out.println("Bad Layer Name" + layerName);
+        }
     }
-  }
+    public void deleteMass(){
+        clearAll();
+        layer.remove(this);
+    }
 
-  public void delete() {
-    clearAll();
-    layer.remove(this);
-  }
+    // the note head themselves can overwrite this show routine.
+    public void show (Graphics g){}
 
-  public void show(Graphics g) {}
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

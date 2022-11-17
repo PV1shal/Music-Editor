@@ -10,24 +10,15 @@ public class UC {
 
     public static final int normCoordinateSize = 1000;
     public static final int noMatchDist = 5000000;
-    public static final int dotThreshold = 5;
-    public static final String shapeDBFileName = "shapeDB.dat";
+    public static final int dotThreshold= 5;
+    public static final String ShapeDBFileName= "ShapeDB.dat";
     public static final int noBid = 1000;
-    public static final int barToMarginSnap = 20;
-
-    public static int defaultStaffSpace = 8;
+    public static final int defaultStaffSpace = 8;
+    public static final int Bar2MarginSnap = 20;
     public static String FontName = "Sinfonia";
+
+    public static final int SnapTime = 100;
+
+    public static final int augDotOffset = 24;
+    public static final int augDotSpace = 9;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
