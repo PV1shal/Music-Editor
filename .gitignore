@@ -1,2 +1,6 @@
 # Project exclude paths
 /out/
+/.idea/modules.xml
+/UNI.iml
+/.idea/vcs.xml
+/.idea/workspace.xml

@@ -7,6 +7,8 @@ import java.util.Random;
 import java.util.Vector;
 
 public class G {
+    public static G.V DOWN = new G.V(0, 1);
+    public static G.V LEFT = new G.V(-1, 0), RIGHT = new G.V(1, 0);
     public static Random RND = new Random();
     public static int rnd (int max){ return RND.nextInt(max);}
     public static Color rndColor(){
@@ -27,6 +29,11 @@ public class G {
         public int x, y;
 
         public V(int x, int y){this.set(x,y);}
+
+        public V() {
+
+        }
+
         public void set(int x, int y){this.x = x;this.y = y;}
 
         public void set(V v){this.x = v.x; this.y = v.y;};
