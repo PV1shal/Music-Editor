@@ -17,7 +17,7 @@ public abstract class Duration extends Mass {
     public void decFlag(){ if (nFlag > -2 ){nFlag --;}}
 
     public void cycleDot(){
-        nDot++;
+        nDot ++;
         if (nDot > 3){
             nDot =0;
         }

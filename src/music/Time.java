@@ -18,21 +18,21 @@ public class Time {
             }
         }
     }
-    public void stemHeads(Sys sys ,boolean up, int y1, int y2){
-        Stem s = new Stem(sys,up);
-        for (Head h : heads){
-            int y = h.y();
-            if (y > y1 && y < y2){
-                h.joinStem(s);
-            }
-        }
-        if (s.heads.size() == 0){
-            System.out.println("? WTF - Empty Head List");
-        } else{
-            s.setWrongSides();
-            s.heads.get(0).staff.sys.stems.addStem(s);
-        }
-    }
+//    public void stemHeads(Sys sys, boolean up, int y1, int y2){
+//        Stem s = new Stem(sys ,up);
+//        for (Head h : heads){
+//            int y = h.y();
+//            if (y > y1 && y < y2){
+//                h.joinStem(s);
+//            }
+//        }
+//        if (s.heads.size() == 0){
+//            System.out.println("? WTF - Empty Head List");
+//        } else{
+//            s.setWrongSides();
+//            s.heads.get(0).staff.sys.stems.addStem(s);
+//        }
+//    }
 
     //------------------------List-------------------//
     public static class List extends ArrayList<Time>{

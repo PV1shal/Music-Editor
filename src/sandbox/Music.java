@@ -2,11 +2,7 @@ package sandbox;
 
 import graphics.G;
 import graphics.Window;
-import music.Beam;
-import music.Glyph;
-import music.Page;
-import music.Sys;
-import music.UC;
+import music.*;
 import reactions.Gesture;
 import reactions.Ink;
 import reactions.Layer;
@@ -22,6 +18,7 @@ public class Music extends Window {
         new Layer("FORE");
     }
     public static Page PAGE;
+
     static int[] xPoly = {100, 200, 200, 100};
     static int[] yPoly = {50, 70, 80, 60};
     static Polygon poly = new Polygon(xPoly, yPoly, 4);
@@ -65,11 +62,13 @@ public class Music extends Window {
 //            Glyph.REST_3F.showAt(g, 8, 700, PAGE.margins.top + 4 * 8);
 //            Glyph.REST_4F.showAt(g, 8, 800, PAGE.margins.top + 4 * 8);
 //        }
-        int h = 8, x1 = 100, x2 = 200;
-        Beam.setMasterBeam(x1, 100 + G.rnd(100), x2, 100 + G.rnd(100));
-        Beam.drawBeamStack(g, 0, 1, x1, x2, h);
-        g.setColor(Color.orange);
-        Beam.drawBeamStack(g, 1, 3, x1 + 10, x2 - 10, h);
+//        int h = 8, x1 = 100, x2 = 200;
+//        Beam.setMasterBeam(x1, 100 + G.rnd(100), x2, 100 + G.rnd(100));
+//        Beam.drawBeanStack(g, 0, 1, x1, x2, h);
+//        g.setColor(Color.orange);
+//        Beam.drawBeanStack(g, 1, 3, x1 + 10, x2 - 10, h);
+
+
     }
     public void mousePressed(MouseEvent me){Gesture.AREA.dn(me.getX(), me.getY()); repaint();}
     public void mouseDragged(MouseEvent me){Gesture.AREA.drag(me.getX(), me.getY()); repaint();}

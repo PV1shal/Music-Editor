@@ -1,5 +1,7 @@
 package graphics;
 
+import javax.imageio.plugins.tiff.BaselineTIFFTagSet;
+import javax.swing.plaf.ViewportUI;
 import java.awt.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -7,8 +9,9 @@ import java.util.Random;
 import java.util.Vector;
 
 public class G {
-    public static G.V DOWN = new G.V(0, 1);
+
     public static G.V LEFT = new G.V(-1, 0), RIGHT = new G.V(1, 0);
+    public static G.V UP = new G.V(0, -1), DOWN = new G.V(0, 1);
     public static Random RND = new Random();
     public static int rnd (int max){ return RND.nextInt(max);}
     public static Color rndColor(){
@@ -17,6 +20,7 @@ public class G {
     public static void clear(Graphics g){
         g.setColor(Color.white); g.fillRect(0,0,5000,5000);
     }
+
 
     public static void drawCycle(Graphics g, int x, int y , int r){
         g.drawOval(x - r,y - r,2*r, 2*r);
@@ -99,10 +103,17 @@ public class G {
             g.setColor(c);
             g.fillRect(loc.x,loc.y,size.x,size.y);
         }
+
+        public void draw(Graphics g, Color c){
+            g.setColor(c);
+            g.drawRect(loc.x,loc.y,size.x,size.y);
+        }
+
         public boolean hit(int x, int y){
             /* && is a shortcut and */
             return loc.x < x && loc.y < y && x < (loc.x + size.x) && y < (loc.y +size.y);
         }
+
         public int xL() {return  loc.x;};
         public int xM() {return  loc.x + size.x / 2;}
         public int xH() {return  loc.x + size.x;};
@@ -202,6 +213,87 @@ public class G {
             drawN(g,size());
         }
     }
+
+    //-----------------------Button----------------------//
+
+    // responsible for drawing a button on the screen, detecting the mouse, visual feedback,
+    // doesn't have any idea what is supposed to happen when you press the button
+    public static abstract class Button{
+
+        public abstract void act(); // the word abstract is not going to
+        public boolean enabled = true, bordered = true;
+        public String text = "";
+        public VS vs = new VS(0,0,0,0);
+        public LookAndFeel lnf = new LookAndFeel();
+        public Button(Button.List list, String str) {
+            if (list != null){list.add(this);}
+            text = str;
+        }
+
+        // what should a button do
+        public void show(Graphics g){
+            if (vs.size.x == 0){setSize(g);} // text in the button demands the resizing
+            vs.fill(g, lnf.back);
+            // test the border
+            if (bordered){vs.draw(g,lnf.border);}
+
+            g.setColor((enabled) ? lnf.enable : lnf.disable);
+            g.drawString(text, vs.loc.x + lnf.m.x, vs.loc.y + lnf.dyText);
+        }
+        public void setSize(Graphics g){
+            FontMetrics fm = g.getFontMetrics(); // fm object which fetches the height (and other metrics) of the FONT.
+            vs.size.set(2 * lnf.m.x + fm.stringWidth(text), 2 * lnf.m.y + fm.getHeight());
+            lnf.dyText = fm.getAscent() + lnf.m.y; // how far the text of from the baseline
+        }
+
+        public void set(int x, int y){ // set the location of the box
+            vs.loc.set(x, y);
+        }
+
+        public boolean hit(int x, int y){return vs.hit(x, y);}
+
+        public void click(){if (enabled){act();}}
+
+
+
+        // ------------------------- LOOK AND FEEL-----------------//
+        public static class LookAndFeel{
+            public Color back = Color.white;
+            public Color border =Color.pink;
+            public Color enable = Color.BLACK;
+            public Color disable = Color.GRAY;
+            public V m = new V(5, 3);
+            public int dyText = 0;
+        }
+
+        //------------------------------List-------------------------//
+        public static class List extends ArrayList<Button>{
+            public Button hit (int x, int y){
+                for (Button b : this){
+                    if (b.hit(x,y)){
+                        return b;
+                    }
+                }
+                return null;
+            }
+            // either no button is hit or we found the button and clicked that button;
+            public boolean clicked(int x, int y){
+                // return true if button was clicked
+                Button b = hit(x, y);
+                if (b == null) return false;
+                b.click();
+                return true;
+            }
+
+            public void show(Graphics g) {
+                for (Button b : this){b.show(g);}
+
+            }
+        }
+
+    }
+
+
 
 
 
